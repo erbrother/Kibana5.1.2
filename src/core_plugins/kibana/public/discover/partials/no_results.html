@@ -1,0 +1,64 @@
+<div>
+  <div class="col-md-10 col-md-offset-1" data-test-subj="discoverNoResults">
+
+    <h1>
+      <!-- No results found --> 没有找到对应数据<i aria-hidden="true" class="fa fa-meh-o"></i>
+    </h1>
+
+    <p>
+      <!-- Unfortunately I could not find any results matching your search. I tried really hard. I looked all over the place and frankly, I just couldn't find anything good. Help me, help you. Here are some ideas: -->
+      不幸的是，我找不到任何结果匹配您的搜索。我真的很努力。我到处看，坦白地说，我找不到任何有用的东西。为了帮助你,以下是一些建议：
+
+    </p>
+
+    <div class="shard-failures" ng-show="failures">
+      <h3>
+        <!-- Shard Failures -->
+        分片失败
+      </h3>
+      <p>
+        <!-- The following shard failures ocurred: -->
+        分片失败出现的原因：
+      </p>
+      <ul>
+        <li ng-repeat="failure in failures | limitTo: failuresShown"><strong>Index:</strong> {{failure.index}} <strong>Shard:</strong> {{failure.shard}} <strong><!-- Reason -->原因:</strong> {{failure.reason}} </li>
+      </ul>
+      <a ng-click="showAllFailures()" ng-if="failures.length > failuresShown" title="Show More"><!-- Show More -->显示更多</a>
+      <a ng-click="showLessFailures()" ng-if="failures.length === failuresShown && failures.length > 5" title="Show Less"><!-- Show Less -->显示更少</a>
+    </div>
+
+    <div ng-show="opts.timefield">
+      <p>
+        <h3>
+          <!-- Expand your time range -->
+          扩展您的时间范围
+        </h3>
+        <p><!-- I see you are looking at an index with a date field. It is possible your query does not match anything in the current time range, or that there is no data at all in the currently selected time range. Click the button below to open the time picker. For future reference you can open the time picker by clicking on the -->我看到你正在看一个带有日期字段的索引。您的查询可能与当前时间范围内的任何内容不匹配，或者在当前所选时间范围内根本没有数据。 点击下面的按钮打开时间选择器。 <a class="btn btn-xs navbtn" ng-click="kbnTopNav.toggle('filter')" aria-expanded="kbnTopNav.is('filter')" aria-label="time picker" data-test-subj="discoverNoResultsTimefilter"><i aria-hidden="true" class="fa fa-clock-o"></i> 时间选择器</a>按钮在屏幕的右上角。
+      </p>
+    </div>
+
+    <h3><!-- Refine your query -->优化您的查询</h3>
+    <p>
+      顶部的搜索栏使用Elasticsearch对Lucene的支持 <a href="http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax" target="_blank">查询字符串语法</a>. 假设我们正在搜索已解析为几个字段的Web服务器日志。
+    </p>
+
+    <p>
+      <h4>例如:</h4>
+      在任何字段中查找包含数字200的请求：
+      <pre>200</pre>
+
+      或者我们可以在特定字段中搜索。 在状态字段中查找200：
+      <pre>status：200</pre>
+
+      查找400-499之间的所有状态代码：
+      <pre>status：[400 TO 499]</pre>
+
+      查找状态代码400-499，扩展名为php：
+      <pre>status:[400 TO 499] AND extension:PHP</pre>
+
+      或者 HTML
+      <pre>status:[400 TO 499] AND (extension:php OR extension:html)</pre>
+    </p>
+
+  </div>
+</div>

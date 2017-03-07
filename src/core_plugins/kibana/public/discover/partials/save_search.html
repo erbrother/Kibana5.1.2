@@ -1,0 +1,20 @@
+<form
+  role="form"
+  ng-submit="opts.saveDataSource()"
+>
+  <div class="localDropdownTitle">
+    <!-- Save Search -->
+    保存搜索    
+  </div>
+  <input
+    class="localDropdownInput"
+    id="SaveSearch"
+    ng-model="opts.savedSearch.title"
+    input-focus="select"
+    placeholder="Name this search..."
+  >
+  <button ng-disabled="!opts.savedSearch.title" data-test-subj="discover-save-search-btn" type="submit" class="btn btn-primary">
+    <!-- Save -->
+    保存
+  </button>
+</form>

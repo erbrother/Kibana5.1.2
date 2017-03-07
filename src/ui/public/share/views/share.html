@@ -1,0 +1,212 @@
+<div class="localDropdownPanels">
+  <!-- Left panel -->
+  <div class="localDropdownPanel localDropdownPanel--left">
+    <!-- Title -->
+    <div
+      data-test-subj="shareUiTitle"
+      class="localDropdownTitle"
+    >
+      分享保存的 {{share.objectType}}
+    </div>
+
+    <!-- Help text -->
+    <div ng-if="share.urls.original" class="localDropdownHelpText">
+      <!-- You can share this URL with people to let them load the most recent saved version of this {{share.objectType}}. -->
+      您可以与他人分享此网址，让他们加载此 {{share.objectType}} 仪表盘的最新保存版本。
+    </div>
+
+    <div ng-if="!share.urls.original" class="localDropdownWarning">
+      请保存此 {{share.objectType}} 仪表盘以启用此共享选项.
+    </div>
+
+    <div ng-if="share.urls.original">
+      <!-- iframe -->
+      <div class="localDropdownSection" ng-if="share.allowEmbed">
+        <!-- Header -->
+        <div class="localDropdownHeader">
+          <div class="localDropdownHeader__label">
+            <!-- Embedded iframe -->
+            嵌入式 iframe
+          </div>
+          <div class="localDropdownHeader__actions">
+            <a
+              class="localDropdownHeader__action"
+              ng-click="share.copyToClipboard('#originalIframeUrl')"
+            >
+              <!-- Copy -->
+              复制
+            </a>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="originalIframeUrl"
+          class="localDropdownInput"
+          type="text"
+          readonly
+          value="{{share.makeIframeTag(share.urls.original)}}"
+        />
+
+        <!-- Notes -->
+        <div class="localDropdownFormNote">
+          <!-- Add to your HTML source. Note that all clients must be able to access Kibana. -->
+          添加到您的HTML源代码。 请注意，所有客户端都必须能够访问Kibana。
+        </div>
+      </div>
+
+      <!-- Link -->
+      <div class="localDropdownSection">
+        <!-- Header -->
+        <div class="localDropdownHeader">
+          <div class="localDropdownHeader__label">
+            <!-- Link -->
+            链接
+          </div>
+          <div class="localDropdownHeader__actions">
+            <a
+              class="localDropdownHeader__action"
+              ng-click="share.copyToClipboard('#originalUrl')"
+            >
+              <!-- Copy -->
+              复制
+            </a>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <input
+          id="originalUrl"
+          class="localDropdownInput"
+          type="text"
+          readonly
+          value="{{share.urls.original}}"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="localDropdownPanel localDropdownPanel--right">
+    <!-- Title -->
+    <div class="localDropdownTitle">
+      <!-- Share Snapshot -->
+      分享快照
+    </div>
+
+    <!-- Help text -->
+    <div class="localDropdownHelpText">
+      <!-- Snapshot URLs encode the current state of the {{share.objectType}} in the URL itself. Edits to the saved {{share.objectType}} won't be visible via this URL. -->
+      快照URL会对URL本身中的 {{share.objectType}} 的当前状态进行编码。 无法通过此网址查看对已保存的 {{share.objectType}} 的修改。
+    </div>
+
+    <!-- iframe -->
+    <div class="localDropdownSection" ng-if="share.allowEmbed">
+      <!-- Header -->
+      <div class="localDropdownHeader">
+        <div class="localDropdownHeader__label">
+          <!-- Embedded iframe -->
+          嵌入 iframe
+        </div>
+        <div class="localDropdownHeader__actions">
+          <a
+            class="localDropdownHeader__action"
+            ng-if="!share.urlFlags.shortSnapshotIframe"
+            ng-click="share.toggleShortSnapshotIframeUrl()"
+          >
+            <!-- Short URL -->
+            短链接
+          </a>
+
+          <a
+            class="localDropdownHeader__action"
+            ng-if="share.urlFlags.shortSnapshotIframe"
+            ng-click="share.toggleShortSnapshotIframeUrl()"
+          >
+            <!-- Long URL -->
+            长链接
+          </a>
+
+          <a
+            class="localDropdownHeader__action"
+            ng-click="share.copyToClipboard('#snapshotIframeUrl')"
+          >
+            <!-- Copy -->
+            <!-- 复制 -->
+          </a>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <input
+        id="snapshotIframeUrl"
+        class="localDropdownInput"
+        type="text"
+        readonly
+        value="{{share.urlFlags.shortSnapshotIframe ? share.makeIframeTag(share.urls.shortSnapshotIframe) : share.makeIframeTag(share.urls.snapshot)}}"
+      />
+
+      <!-- Notes -->
+      <div class="localDropdownFormNote">
+        <!-- Add to your HTML source. Note that all clients must be able to access Kibana. -->
+        添加到您的HTML源代码。 请注意，所有客户端都必须能够访问Kibana。
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div class="localDropdownSection">
+      <!-- Header -->
+      <div class="localDropdownHeader">
+        <div class="localDropdownHeader__label">
+          <!-- Link -->
+          链接
+        </div>
+        <div class="localDropdownHeader__actions">
+          <a
+            data-test-subj="sharedSnapshotShortUrlButton"
+            class="localDropdownHeader__action"
+            ng-if="!share.urlFlags.shortSnapshot"
+            ng-click="share.toggleShortSnapshotUrl()"
+          >
+            <!-- Short URL -->
+            短链接
+          </a>
+
+          <a
+            class="localDropdownHeader__action"
+            ng-if="share.urlFlags.shortSnapshot"
+            ng-click="share.toggleShortSnapshotUrl()"
+          >
+            <!-- Long URL -->
+            长链接
+          </a>
+
+          <a
+            data-test-subj="sharedSnapshotCopyButton"
+            class="localDropdownHeader__action"
+            ng-click="share.copyToClipboard('#snapshotUrl')"
+          >
+            <!-- Copy -->
+            复制
+          </a>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <input
+        data-test-subj="sharedSnapshotUrl"
+        id="snapshotUrl"
+        class="localDropdownInput"
+        type="text"
+        readonly
+        value="{{share.urlFlags.shortSnapshot ? share.urls.shortSnapshot : share.urls.snapshot}}"
+      />
+
+      <!-- Notes -->
+      <div class="localDropdownFormNote">
+        <!-- We recommend sharing shortened snapshot URLs for maximum compatibility. Internet Explorer has URL length restrictions, and some wiki and markup parsers don't do well with the full-length version of the snapshot URL, but the short URL should work great. -->
+        我们建议共享缩短的快照URL以实现最大兼容性。 Internet Explorer具有URL长度限制，并且一些wiki和标记解析器对快照URL的完整版本不是很好，但是短URL应该工作得很好。
+      </div>
+    </div>
+  </div>
+</div>

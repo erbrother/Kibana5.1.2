@@ -1,0 +1,24 @@
+<form
+  role="form"
+  ng-submit="opts.doSave()"
+>
+  <div class="localDropdownTitle"><!-- Save Visualization -->
+    保存可视化图表
+  </div>
+  <input
+    class="localDropdownInput"
+    input-focus="select"
+    type="text"
+    name="visTitle"
+    ng-model="opts.savedVis.title"
+    required
+  >
+  <button
+    data-test-subj="saveVisualizationButton"
+    type="submit"
+    class="btn btn-primary"
+  >
+    <!-- Save -->
+    保存
+  </button>
+</form>
